@@ -72,10 +72,13 @@ function App() {
     const value = 25
 
     if (state.name) {
-      result += value
+      const splittedName = state.name.split(" ")
+      if (splittedName[1]) result += value
     }
     if (state.email) {
-      result += value
+      const pattern =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      if (pattern.test(state.email)) result += value
     }
     if (state.maritalState) {
       result += value
