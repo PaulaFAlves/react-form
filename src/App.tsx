@@ -59,9 +59,32 @@ function App() {
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = event.target
-    console.log({ name })
-    console.log({ value })
     setState((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = () => {
+    alert("Formulário enviado!")
+    setState(initialState)
+  }
+
+  const progress = () => {
+    let result = 0
+    const value = 25
+
+    if (state.name) {
+      result += value
+    }
+    if (state.email) {
+      result += value
+    }
+    if (state.maritalState) {
+      result += value
+    }
+    if (state.genre) {
+      result += value
+    }
+
+    return result
   }
 
   return (
@@ -70,7 +93,9 @@ function App() {
       <h1>progresso do formulário</h1>
 
       <main>
-        {/* crie a barra de progresso aqui */}
+        <div className="bar-container">
+          <div className="bar" style={{ width: `${progress()}%` }} />
+        </div>
         <div className="form-group">
           <label htmlFor="name">Nome Completo</label>
           <input name="name" onChange={handleChange} value={state.name} />
@@ -117,7 +142,9 @@ function App() {
             </span>
           </div>
         </div>
-        <button>Enviar Formulário</button>
+        <button onClick={handleSubmit} disabled={progress() !== 100}>
+          Enviar Formulário
+        </button>
       </main>
     </div>
   )
