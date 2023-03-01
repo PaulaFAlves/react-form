@@ -35,46 +35,92 @@ Ao enviar, deve-se apresentar um alert javascript com sucesso, limpar todos os c
 do formulário e zerar a barra de progresso novamente.
 */
 
+import { useState } from "react"
+type StateProps = {
+  name: string
+  email: string
+  maritalState: string
+  genre: string
+}
+
+const initialState: StateProps = {
+  name: "",
+  email: "",
+  maritalState: "",
+  genre: "",
+}
+
 function App() {
+  const [state, setState] = useState(initialState)
+
+  const handleChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target
+    console.log({ name })
+    console.log({ value })
+    setState((prev) => ({ ...prev, [name]: value }))
+  }
+
   return (
-    <div className='App'>
+    <div className="App">
       <h3>desafio fernandev</h3>
       <h1>progresso do formulário</h1>
 
       <main>
         {/* crie a barra de progresso aqui */}
-        <div className='form-group'>
-          <label htmlFor=''>Nome Completo</label>
-          <input />
+        <div className="form-group">
+          <label htmlFor="name">Nome Completo</label>
+          <input name="name" onChange={handleChange} value={state.name} />
         </div>
-        <div className='form-group'>
-          <label htmlFor=''>E-mail</label>
-          <input />
+        <div className="form-group">
+          <label htmlFor="email">E-mail</label>
+          <input name="email" value={state.email} onChange={handleChange} />
         </div>
-        <div className='form-group'>
-          <label htmlFor=''>Estado Civil</label>
-          <select>
-            <option value=''>- selecione...</option>
-            <option value='solteiro'>Solteiro</option>
-            <option value='casado'>Casado</option>
-            <option value='divorciado'>Divorciado</option>
+        <div className="form-group">
+          <label htmlFor="maritalState">Estado Civil</label>
+          <select
+            name="maritalState"
+            value={state.maritalState}
+            onChange={handleChange}
+          >
+            <option value="">- selecione...</option>
+            <option value="solteiro">Solteiro</option>
+            <option value="casado">Casado</option>
+            <option value="divorciado">Divorciado</option>
           </select>
         </div>
-        <div className='form-group'>
-          <label htmlFor=''>Gênero</label>
-          <div className='radios-container'>
+        <div className="form-group">
+          <label htmlFor="">Gênero</label>
+          <div className="radios-container">
             <span>
-              <input type='radio' /> Masculino
+              <input
+                type="radio"
+                name="genre"
+                value="masculino"
+                onChange={handleChange}
+                checked={state.genre === "masculino"}
+              />
+              Masculino
             </span>
             <span>
-              <input type='radio' /> Feminino
+              <input
+                type="radio"
+                name="genre"
+                value="feminino"
+                onChange={handleChange}
+                checked={state.genre === "feminino"}
+              />
+              Feminino
             </span>
           </div>
         </div>
         <button>Enviar Formulário</button>
       </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
